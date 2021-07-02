@@ -16,26 +16,32 @@
 // // or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
 // reportWebVitals();
 
+import { createStore } from "redux";
+
 const add = document.getElementById("add");
 const minus = document.getElementById("minus");
 const number = document.querySelector("span");
 
-let count = 0;
+// //reducer는 데이터를 modify(수정)하는 함수
+// const reducer = () => {};
 
-number.innerText = count;
+// //store는 데이터를 저장하는 곳
+// //createStore는 reducer를 필수로함
+// const store = createStore();
 
-const updateText = () => {
-  number.innerText = count;
+const countModifier = (count = 0, action) => {
+  if (action.type === "Add") {
+    return count + 1;
+  }
+  if (action.type === "rr") {
+    return count + 20;
+  }
+  return count;
 };
 
-const handleAdd = () =>{
-  count += 1;
-  updateText();
-};
-const handleMinus = () =>{
-  count -= 1;
-  updateText();
-};
+const countStore = createStore(countModifier);
 
-add.addEventListener("click",handleAdd);
-minus.addEventListener("click",handleMinus);
+countStore.dispatch({ type: "Add" }); //action과 소통하는 방법 "dispatch"
+countStore.dispatch({ type: "rr" }); //action과 소통하는 방법 "dispatch"
+
+console.log(countStore.getState()); //return값을 주네
