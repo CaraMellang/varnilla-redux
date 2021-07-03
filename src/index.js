@@ -16,7 +16,9 @@
 // // or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
 // reportWebVitals();
 
+import { createElement } from "react";
 import { createStore } from "redux";
+/*
 
 const add = document.getElementById("add");
 const minus = document.getElementById("minus");
@@ -68,3 +70,76 @@ const minusHandle = () => {
 add.addEventListener("click", addHandle);
 
 minus.addEventListener("click", minusHandle);
+
+*/ //~pure redux : counter
+
+const form = document.querySelector("form");
+const input = document.querySelector("input");
+const ul = document.querySelector("ul");
+
+const ADD_TODO = "ADD_TODO";
+const DELETE_TODO = "DELETE_TODO";
+
+const reducer = (state = "", action) => {
+  switch (action.type) {
+    case ADD_TODO:
+      const newToDoObj = { text: action.text, id: action.id };
+      return [newToDoObj, ...state];
+    case DELETE_TODO:
+      return state.filter((todo) => todo.id !== parseInt(action.id)); //html로 받아오는 id는 string 형태이므로 parseInt
+    default:
+      return state;
+  }
+};
+
+const store = createStore(reducer);
+
+store.subscribe(() => {
+  console.log(store.getState());
+});
+
+const addToDo = (text, date) => {
+  //코드쪼개기
+  return { type: ADD_TODO, text, id: date };
+};
+
+const dispatchAddTodo = (text) => {
+  const date = Date.now(); //리듀서에는 이런것을 쓰면 안됨 외부에서 디스패치
+  store.dispatch(addToDo(text, date));
+};
+
+const deleteToDo = (id) => {
+  //코드쪼개기
+  return { type: DELETE_TODO, id };
+};
+
+const dispatchDeletoToDo = (e) => {
+  const id = e.target.parentNode.id; //부모노드의 id속성값
+  store.dispatch(deleteToDo(id));
+};
+
+const paintToDos = () => {
+  const toDos = store.getState();
+  ul.innerText = ""; //store가 바뀔때마다 바로 위 toDos에 repainting하기 때문에
+  toDos.forEach((todo) => {
+    const li = document.createElement("li");
+    const btn = document.createElement("button");
+    btn.innerText = "삭제!";
+    btn.addEventListener("click", dispatchDeletoToDo);
+    li.id = todo.id;
+    li.innerText = todo.text;
+    li.appendChild(btn);
+    ul.appendChild(li);
+  });
+};
+
+store.subscribe(paintToDos);
+
+const onSubmit = (e) => {
+  e.preventDefault();
+  const todo = input.value;
+  input.value = "";
+  dispatchAddTodo(todo);
+};
+
+form.addEventListener("submit", onSubmit);
