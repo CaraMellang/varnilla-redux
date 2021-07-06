@@ -5,8 +5,10 @@ const DELETE = "DELETE";
 
 const addToDo = (text) => {
   //action creator
+  const date = Date.now();
   return {
     type: ADD,
+    date,
     text,
   };
 };
