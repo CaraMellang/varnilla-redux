@@ -2,14 +2,14 @@ import React from "react";
 import { connect } from "react-redux";
 // import { useParams } from "react-router-dom";
 
-const Detail = ({ toDos }) => {
+const Detail = ({ toDo }) => {
   // const id = useParams(); 리덕스 대신 useParams 써도 됨
   // console.log(id);
-  console.log(toDos);
   return (
-    <div>
-      <h1>elxpdlf</h1>
-    </div>
+    <>
+      <h1>{toDo?.text}</h1>
+      <h5>Created at : {toDo?.id}</h5>
+    </>
   );
 };
 
@@ -20,7 +20,7 @@ function mapStateToProps(state, ownProps) {
     },
   } = ownProps;
   console.log(id);
-  return { toDos: state.find((toDo) => toDo.id === parseInt(id)) };
+  return { toDo: state?.find((toDo) => toDo.id === parseInt(id)) };
 }
 
 export default connect(mapStateToProps)(Detail);
