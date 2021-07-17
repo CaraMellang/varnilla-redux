@@ -1,4 +1,4 @@
-import { createAction, createReducer } from "@reduxjs/toolkit";
+import { configureStore, createAction, createReducer } from "@reduxjs/toolkit";
 import { createStore } from "redux";
 
 // const ADD = "ADD";
@@ -65,7 +65,8 @@ const reducer = createReducer([], {
 //ㄴ>(immer아래서 작동되어 툴킷이 위의 순수리덕스 방식으로 처리하기때문에 가능)
 //툴킷은 mutate뿐만 아니라 위의 순수리덕스처럼 리턴형식으로도 가능
 
-const store = createStore(reducer);
+// const store = createStore(reducer);
+const store = configureStore({reducer});
 
 export const actionCreators = {
   addToDo,
