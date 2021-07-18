@@ -1,6 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
-import { actionCreators } from "../store";
+// import { actionCreators } from "../store(pre)";
+import { remove } from "../store";
 import { Link } from "react-router-dom";
 
 const ToDo = ({ text, onBtnClick, id }) => {
@@ -16,7 +17,7 @@ function mapDispatchToProps(dispatch, ownProps) {
   console.log("오운프롭스!", ownProps);
   //id를 dispatch해야하는데 ownProps에 이미 들어있음
   return {
-    onBtnClick: () => dispatch(actionCreators.deleteToDo(ownProps.id)),
+    onBtnClick: () => dispatch(remove(ownProps.id)),//createSlice사용
   };
 }
 

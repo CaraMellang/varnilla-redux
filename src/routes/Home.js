@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
-import { actionCreators } from "../store";
+// import { actionCreators } from "../store(pre)";
+import {add,remove} from "../store"
 import ToDo from "../components/ToDo";
 
 const Home = ({ toDos, addToDo }) => {
@@ -42,7 +43,8 @@ function mapStateToProps(state, OwnProps) {
 function mapDispatchToProps(dispatch, ownProps) {
   // console.log(dispatch);
   return {
-    addToDo: (text) => dispatch(actionCreators.addToDo(text)),
+    // addToDo: (text) => dispatch(actionCreators.addToDo(text)),
+    addToDo: (text) => dispatch(add(text)),//createSlice사용
   };
   //리턴함녀 해당 컴포넌트 props로 쓸수있음
 }
